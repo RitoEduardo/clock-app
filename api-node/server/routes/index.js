@@ -14,8 +14,6 @@ app.get('/api', function(req, res) {
 
 app.get('/api/models', function(req, res) {
 
-    res.header('Access-Control-Allow-Origin', '*');
-
     Model.find({})
         .exec((err, response) => {
 
@@ -36,8 +34,6 @@ app.get('/api/models', function(req, res) {
 
 app.post('/api/models', function(req, res) {
 
-    res.header('Access-Control-Allow-Origin', '*');
-
     let body = req.body;
 
     if (!body.hour || !body.minutes) {
@@ -56,7 +52,7 @@ app.post('/api/models', function(req, res) {
             err : `The hour => ${ body.hour } format or limit invalid`
         });
     };
-    console.log( ValidateModel.minute(minute) , minute );
+    
     if( ValidateModel.minute(minute) == false) {
         return res.status(400).json({
             success: false,
@@ -89,11 +85,9 @@ app.post('/api/models', function(req, res) {
 });
 
 app.delete('/api/models/:id', function(req, res) {
-
-    res.header('Access-Control-Allow-Origin', '*');
-
+    
     let id = req.params.id;
-
+    
     Model.findByIdAndRemove(id, (err, modelDB) => {
 
         if (err) {

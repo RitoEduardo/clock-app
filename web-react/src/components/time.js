@@ -7,12 +7,25 @@ function fnAddZero(n){
 function Time(props){
   return(
 	<li className="liDateFormat">
-		{ fnAddZero( props.value.getHours() ) }
+		<div className="tooltip">
+			<span className="serverData">
+			{ fnAddZero( props.value.date_random.getHours() ) }
+			:
+			{ fnAddZero( props.value.date_random.getMinutes() ) }
+			</span>
+		  <span className="tooltiptext">Información random del servidor</span>
+		</div>
+		<div className="tooltip">
+		<span className="localData">
+		{ fnAddZero( props.value.date_user.getHours() ) }
 		:
-		{ fnAddZero( props.value.getMinutes() ) }
+		{ fnAddZero( props.value.date_user.getMinutes() ) }
+		</span>
+		<span className="tooltiptext">Información generada por el usuario</span>
+		</div>
 		<div className="button-container">
 			<button
-			  onClick={() => {props.handleDelete(props.id)}}
+			  onClick={() => {props.handleDelete(props.value.id,props.indexId)}}
 			  className="delete-button"
 			>
 			X

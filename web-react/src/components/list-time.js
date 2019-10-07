@@ -4,7 +4,7 @@ import Time from './time'
 function TimeList(props){
   return(
     <Fragment>
-      {props.time.map((d, id) => <Time key={id} value={d} handleDelete={props.handleDelete}/>)}
+      {props.time.map((data, id) => <Time key={id} value={data} handleDelete={props.handleDelete} indexId={id}/>)}
     </Fragment>
   )
 }

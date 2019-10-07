@@ -13,28 +13,29 @@ class App extends React.Component{
 			srcTime: "12:00",
 			timeInput : null,
 			//Hora y minutos agregados
-			time: [],
-			//Datos del servidor - historicos
-			oldTime : [],
+			timeServer: [],
         }
     }
 	componentDidMount() {
         fetch('http://localhost:4000/api/models/',{})
 			.then(res => res.json())
 			.then((data) => {
-			  console.log(data);
-				let random_time = data.response.map( (x)=> {
-					return new Date(x['date_generate'])
+				let get_time = data.response.map( (x)=> {
+					return {
+						date_random : new Date(x['date_generate']),
+						date_user : new Date(x['date_user']),
+						id : x['_id']
+					}	
 				})
-				console.log( random_time );
+				//Datos del servidor - historicos
+				this.newTime = get_time;
 			  this.setState({ 
-				oldTime: random_time
+				timeServer: get_time
 			  })
 			})
 			.catch(console.log)
       }
 	handleTimeChange = (event) => {
-		console.log( event.target.value );
 		let src = event.target.value;
 		this.setState({
 			srcTime : src,
@@ -69,23 +70,45 @@ class App extends React.Component{
 		}).then(res => res.json())
 		.catch(error => console.error('Error:', error))
 		.then(response =>{
-			console.log('Success:', response)
+			let x = response.model;
+			let timeServer = {
+				date_random : new Date(x['date_generate']),
+				date_user : new Date(x['date_user']),
+				id : x['_id']
+			}				
+			this.newTime.push(timeServer);
+			this.setState({
+				srcTime: "12:00",
+				timeInput: null,
+				timeServer: this.newTime
+			});
 		});
 		
 		
-		this.newTime.push(timeNow);
-		this.setState({
-			srcTime: "12:00",
-			timeInput: null,
-			time: this.newTime
-		});
+		
 	}
-	handleDelete = (id) => {
-	  let d = this.state.time;
-	  this.newTime.splice(id, 1)
-	  this.setState({
-		time: this.newTime
-	  })
+	handleDelete = (id, index ) => {
+		
+		fetch('http://localhost:4000/api/models/'+id, {
+		  method: 'DELETE',
+		  headers:{
+			'Content-Type':'application/json'
+		  }
+		}).then(res => res.json())
+		.catch(error => console.error('Error:', error))
+		.then(response =>{
+			if( response && response['success'] == true ){
+				this.newTime.splice(index, 1);
+				this.setState({
+					timeServer: this.newTime
+				})
+			}else{
+				alert("Error en la eliminación");
+			}
+			
+		});
+		return;
+	  
 	}
 	// Access the clock 
 	fnExecute = (d) => {
@@ -110,8 +133,7 @@ class App extends React.Component{
 					  <input type="submit"/>
 					</form>
 					<ul>
-						<TimeList time={this.state.oldTime} handleDelete={this.handleDelete}/>
-						<TimeList time={this.state.time} handleDelete={this.handleDelete}/>
+						<TimeList time={this.state.timeServer} handleDelete={this.handleDelete} />
 					</ul>
 				</div>  
 			</div>

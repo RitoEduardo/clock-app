@@ -24,7 +24,6 @@
 
 li {
     width: 150px;
-    height: 25px;
     background-color: #5fd65f;
     margin-bottom: 8px;
     font-size: 16px;
@@ -48,7 +47,44 @@ ul {
 }
 
 .button-container {
+    cursor: hand;
     position: relative;
     float: right;
     margin: 0px 7px;
+}
+
+span.serverData {
+    cursor: hand;
+    background: #ff1a1a;
+    position: relative;
+    margin-right: 6px;
+}
+
+span.localData {
+    cursor: hand;
+    background: brown;
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
 }
