@@ -1,0 +1,54 @@
+.App {
+    text-align: center;
+}
+
+.App-header {
+    background-color: #282c34;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: white;
+}
+
+.App-link {
+    color: #09d3ac;
+}
+
+.test-label {
+    text-align: center;
+    color: white;
+}
+
+li {
+    width: 150px;
+    height: 25px;
+    background-color: #5fd65f;
+    margin-bottom: 8px;
+    font-size: 16px;
+    border: #282c34 1px solid;
+    border-radius: 5px;
+}
+
+ul {
+    list-style: none;
+    margin: 0;
+    padding: 10px 0px 10px 10px;
+}
+
+.delete-button {
+    background-color: black;
+    border-radius: 15px;
+    height: 20px;
+    color: white;
+    border-width: 0px;
+    font-weight: bolder;
+}
+
+.button-container {
+    position: relative;
+    float: right;
+    margin: 0px 7px;
+}
